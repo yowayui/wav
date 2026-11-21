@@ -1,0 +1,64 @@
+[package]
+name = "wav"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+description = "A minimalist local music player for Linux"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/yowayui/wav"
+keywords = ["music", "player", "audio", "tui"]
+categories = ["multimedia::audio", "command-line-utilities"]
+
+[[bin]]
+name = "wav"
+path = "src/main.rs"
+
+[dependencies]
+# Audio decoding
+symphonia = { version = "0.5", features = ["mp3", "flac", "ogg", "wav", "pcm", "aiff"] }
+# Audio output
+cpal = "0.15"
+# Resampling
+rubato = "0.14"
+# Lock-free ring buffer
+ringbuf = "0.3"
+
+# TUI
+ratatui = "0.26"
+crossterm = "0.27"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# Metadata
+lofty = "0.18"
+
+# Database
+rusqlite = { version = "0.31", features = ["bundled"] }
+
+# Config / serialization
+toml = "0.8"
+serde = { version = "1", features = ["derive"] }
+
+# Filesystem
+walkdir = "2"
+shellexpand = "3"
+
+# Threading
+crossbeam-channel = "0.5"
+
+# Error handling
+thiserror = "1"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+strip = "symbols"
